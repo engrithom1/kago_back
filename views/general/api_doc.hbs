@@ -1,0 +1,149 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-3"></div>
+        <div class="col-sm-12 col-md-6 border-left border-right">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">
+                    <h2>Kagopoint API Doc</h2>
+                </a>
+            </nav>
+
+
+            <div class="accordion" id="accordionExample">
+                <div class="card">
+                    <div class="card-header" id="intro-h">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#intro"
+                                aria-expanded="true" aria-controls="intro">
+                               1.0 Introduction
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="intro" class="collapse show" aria-labelledby="intro-h" data-parent="#accordionExample">
+                        <div class="card-body">
+                            {{>intro}}
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="login-h">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                data-target="#login" aria-expanded="false" aria-controls="login">
+                                1.1 Auth login
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="login" class="collapse" aria-labelledby="login-h" data-parent="#accordionExample">
+                        <div class="card-body">
+                            {{>login}}
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="logout-h">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                data-target="#logout" aria-expanded="false" aria-controls="logout">
+                                1.2 Auth logout
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="logout" class="collapse" aria-labelledby="logout-h"
+                        data-parent="#accordionExample">
+                        <div class="card-body">
+                            {{>logout}}
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="alltag-h">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                data-target="#alltag" aria-expanded="false" aria-controls="alltag">
+                                2.1 Get all tags
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="alltag" class="collapse" aria-labelledby="alltag-h"
+                        data-parent="#accordionExample">
+                        <div class="card-body">
+                           {{>all-tag}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header" id="get-branch-h">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                data-target="#getbranch" aria-expanded="false" aria-controls="getbranch">
+                                3.1 get branches
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="getbranch" class="collapse" aria-labelledby="get-branch-h"
+                        data-parent="#accordionExample">
+                        <div class="card-body">
+                           {{>get-branch}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header" id="parcel-create-h">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                data-target="#parcel_create" aria-expanded="false" aria-controls="parcel_create">
+                                4.1 Parcel create
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="parcel_create" class="collapse" aria-labelledby="parcel-create-h"
+                        data-parent="#accordionExample">
+                        <div class="card-body">
+                           {{>parcel_create}}
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="card">
+                    <div class="card-header" id="incoming-h">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                data-target="#incoming" aria-expanded="false" aria-controls="incoming">
+                                4.2 Incoming parcel
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="incoming" class="collapse" aria-labelledby="incoming-h"
+                        data-parent="#accordionExample">
+                        <div class="card-body">
+                           {{>incoming}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header" id="outgoing-h">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                data-target="#outgoing" aria-expanded="false" aria-controls="outgoing">
+                                4.2 outgoing parcel
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="outgoing" class="collapse" aria-labelledby="outgoing-h"
+                        data-parent="#accordionExample">
+                        <div class="card-body">
+                           {{>outgoing}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-3"></div>
+    </div>
+</div>

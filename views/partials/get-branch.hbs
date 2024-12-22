@@ -1,0 +1,29 @@
+Company branches/ destination
+
+<h5>GET = base_url/api/branch/all-branches</h5>
+<h5>GET = base_url/api/branch/other-branches</h5>
+<h6>response</h6>
+<pre>{
+	"success": true,
+	"code": 200,
+	"branches": [
+		{
+			"region": "Arusha",
+			"created_by": "Sambokile kindeki",
+			"created_at": "2024-12-04T12:53:11.000Z",
+			"name": "kisongo",
+			"thumbnail": "branch.jpg",
+			"description": "no kisongo",
+			"district": "arusha",
+			"location": "kisongo juu",
+			"status": 1
+		},
+         ]
+}
+</pre>
+
+<h6>Notes</h6>
+<p>branches with status = 0 must be disable on choices</p>
+<p>all-branches give all company branches including branch you from</p>
+<p>other-braches give company branches except what you belong this
+is useful on add package destination choises.</p>

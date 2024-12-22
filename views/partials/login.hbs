@@ -1,0 +1,43 @@
+<h5>POST = base_url/api/auth/login</h5>
+<p>Token not required</p>
+<p>request payload</p>
+<pre>
+{
+  "phone":"0615498026",
+  "password":"1234567890"
+}
+</pre>
+<p>presponse data</p>
+<pre>
+{
+	"success": true,
+	"code": 200,
+	"user": {
+		"id": 7,
+		"fulname": "Isaya Business ",
+		"phone": "0615498026",
+		"role": 2,
+		"role_name": "Admin",
+		"avator": "user.jpg",
+		"phone1": "0615498026",
+		"username": "0615498026",
+		"branch_name": "kisongo",
+		"branch_district": "arusha",
+		"branch_image": "branch.jpg",
+		"branch_location": "kisongo juu",
+		"branch_region": "Arusha",
+		"branch_id": 3,
+		"company_id": 2,
+		"company_name": "Muvuzisha",
+		"company_label": "Muvuzisha",
+		"company_logo": "logo.jpg"
+	},
+	"token": {
+		"accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+		"refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+	}
+}
+</pre>
+<h6>NOTES</h6>
+<p>All above user information are useful</p>
+<p>accessToken is now required for every request you make.</p>
