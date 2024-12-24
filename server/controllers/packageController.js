@@ -506,6 +506,11 @@ exports.receivePackage = (req, res) => {
 
   var { id,barcode_id, closed_description } = req.body;
 
+  
+  if (!id || !barcode_id) {
+    return res.status(200).json({success:false, code: 409,message: 'Parcel ID and Barcode Id are required' })
+}
+
   var user = req.user.user_data
 
   var user_id = user.id;
@@ -539,6 +544,104 @@ exports.receivePackage = (req, res) => {
       });
 
   });
+
+}
+
+exports.removePackage = async (req, res) => {
+
+  var updated_at = getDateTime()
+
+  var user = req.user.user_data
+  var user_id = user.id;
+  var branch_id = user.branch_id;
+  var company_id = user.company_id;
+
+  var { barcode_id, id, description } = req.body;
+
+  if (!id || !barcode_id) {
+    return res.status(200).json({success:false, code: 409,message: 'Parcel ID and Barcode Id are required' })
+}
+
+  //console.log(req.body);
+ 
+  var vname = await richFunctions.validateDescription(description,'Remove Description');
+    if (vname != true) {
+        return res.status(200).json({success:false, code:409, message: vname })
+    }
+  
+  var query = "UPDATE packages SET status = ?, updated_at = ?, remove_by = ?, remove_description = ? WHERE barcode_id = ? AND id = ?;"
+
+  pool.getConnection((err, connection) => {
+    if (err) throw err; // not connected
+    //console.log('Connected!');
+
+    connection.query(query, [3, updated_at, user_id, description, barcode_id, id], (err, rows) => {
+      connection.release();
+      if (!err) {
+
+        return res.status(200).json({success:true, code:200, message: "Parcel successful Removed" })
+      } else {
+        console.log(err);
+        return res.status(200).json({success:false, code:500, message: "Server or Database Error" })
+      }
+
+    });
+
+  })
+}
+
+////////sms conversation////////////////////////////////////////////////
+exports.sendMultSMS = async (req, res) => {
+
+  var user = req.user.user_data
+  var user_id = user.id;
+  var branch_id = user.branch_id;
+  var company_id = user.company_id;
+
+
+  var phone_list = req.body.phone_list
+  var message = req.body.message
+
+  if (!phone_list) {
+    return res.status(200).json({success:false, code: 409,message: 'Phone numbers list are required' })
+}
+
+  var vname = await richFunctions.validateMessage(message);
+    if (vname != true) {
+        return res.status(200).json({success:false, code:409, message: vname })
+    }
+
+  var sms_num = 1;
+  var list_arry = phoneListArray(phone_list)
+  var receivers = list_arry.length
+
+  if(message.length > 160){
+    sms_num = 2;
+  }
+  var messages = sms_num * receivers
+
+  var ress = await richFunctions.sendMultSMS(list_arry, message)
+  console.log(ress.status)
+
+  var query = "INSERT INTO messages SET branch_id = ?, company_id = ?, message = ?, messages = ?, receivers = ?, receiver_list = ?, created_by = ?;"
+
+  if(ress.status == 200){
+  pool.getConnection((err, connection) => {
+    if (err) throw err; // not connected
+
+    connection.query(query,[branch_id ,company_id ,message, messages, receivers, phone_list, user_id], (err,row) => {
+      if (!err) {
+        return res.status(200).json({success:true, code:200, message: 'Message sent successfully' })
+      }else{
+          console.log(err);
+          return res.status(200).json({success:true, code:200, message: 'Message sent, but records not saved' })
+      }  
+    });
+  });
+}else{
+  return res.status(200).json({success:false, code:500, message: 'Message not sent, check your bundle or network connection try again' })
+  
+}
 
 }
 

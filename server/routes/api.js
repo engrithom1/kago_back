@@ -22,8 +22,11 @@ router.get("/user/top-customers",checker.ensureAuthenticated, userController.top
 router.post("/user/search-customers",checker.ensureAuthenticated, userController.searchCustomers);
 router.post("/user/customer-events",checker.ensureAuthenticated, userController.customerEvents);
 
+//////send messages
+router.post("/sms/multiple",checker.ensureAuthenticated, packageController.sendMultSMS);
 
-//////////packages///////////
+//////////packages//////////// 
+router.post("/parcel/delete",checker.ensureAuthenticated, packageController.removePackage);
 router.post("/parcel/receive",checker.ensureAuthenticated, packageController.receivePackage);
 router.post("/parcel/create",checker.ensureAuthenticated, packageController.createPackage);
 router.post("/parcel/update",checker.ensureAuthenticated, packageController.updatePackage);

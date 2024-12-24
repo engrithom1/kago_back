@@ -199,6 +199,19 @@ exports.validateDescription = async (name, label) => {
     }
 }
 
+exports.validateMessage = async (name) => {
+    if (!name) {
+        return 'Message is required'
+    } else {
+        if (name.length > 360) {
+            return ' Message is too long, must be less than 360 character. you have '+name.length
+
+        } else {
+            return true
+        }
+    }
+}
+
 exports.validateStatus = async (status, label) => {
    
         if (status === 0 || status === 1) {
