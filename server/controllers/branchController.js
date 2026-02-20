@@ -37,15 +37,16 @@ exports.deleteBranch = async(req, res) =>{
       if (err) throw err; // not connected
      
       connection.query(query,[id, id, id, company_id, id], (err, rows) => {
-         connection.release();
+         
         if (!err) {
 
-          console.log(rows)
+          //console.log(rows)
           var users = rows[0];
           var packages = rows[1];
           var branch = rows[2]
 
           if(branch.length == 0){
+            connection.release();
             return res.status(200).json({ success: false, code: 409, message: "Can't delete branch, not belong to your company" })
             
           }else{
@@ -58,7 +59,7 @@ exports.deleteBranch = async(req, res) =>{
           }else{
 
             connection.query('DELETE FROM branches WHERE id = '+id, (err, rows) => {
-              //connection.release();
+              connection.release();
               if (!err) {
 
                 if(branch_image != 'branch.jpg'){
@@ -83,7 +84,7 @@ exports.deleteBranch = async(req, res) =>{
                 }
                 
               } else { 
-                console.log(err);
+                //console.log(err);
                 return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
               }
   
@@ -92,7 +93,7 @@ exports.deleteBranch = async(req, res) =>{
           }
 
         } else { 
-          console.log(err);
+          //console.log(err);
           return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
         }
 
@@ -109,7 +110,7 @@ exports.updateBranch = async(req, res) => {
   var branch_id = user.branch_id;
   var company_id = user.company_id;
 
-  var { name,status, id, region, district, location, description } = req.body;
+  var { name,status, id, region, contacts, district, location, description } = req.body;
 
   //console.log(req.body)
   description = description || "New branch at " + location
@@ -117,6 +118,11 @@ exports.updateBranch = async(req, res) => {
   var vname = await richFunctions.validateNames(name, "Branch name");
     if (vname != true) {
       return res.status(200).json({ success: false, code: 409, message: vname })
+    }
+
+    var vphone = await richFunctions.validatePhone(contacts,'Destination');
+    if (vphone != true) {
+      return res.status(200).json({ success: false, code: 409, message: vphone })
     }
 
     var vdistrict = await richFunctions.validateNames(district, "District");
@@ -150,19 +156,19 @@ exports.updateBranch = async(req, res) => {
     }*/
 
 
-  var update_qry = "UPDATE branches SET name = ?, region = ?,district = ?,location = ? , description = ?, updated_by = ?,status = ? WHERE id = ? AND company_id = ?;"
+  var update_qry = "UPDATE branches SET name = ?, region = ?, contacts = ?, district = ?,location = ? , description = ?, updated_by = ?,status = ? WHERE id = ? AND company_id = ?;"
 
   pool.getConnection((err, connection) => {
     if (err) throw err; // not connected
     //console.log('Connected!');
-      connection.query(update_qry, [name, region, district, location, description, user_id, status, id, company_id], (err, rows) => {
+      connection.query(update_qry, [name, region, contacts, district, location, description, user_id, status, id, company_id], (err, rows) => {
         // Once done, release connection
         connection.release();
 
         if (!err) {
           return res.status(200).json({ success: true, code: 200, message: "branch updated Successfuly" })
         } else {
-          console.log(err);
+          //console.log(err);
           return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
         }
 
@@ -175,12 +181,15 @@ exports.updateBranch = async(req, res) => {
 exports.createBranch = async(req, res) => {
 
   var user = req.user.user_data
-
   var user_id = user.id;
   var branch_id = user.branch_id;
   var company_id = user.company_id;
 
-  var { name, region, district, location, description } = req.body;
+  var bundles = req.bundles
+  var _branches = bundles.branches
+  
+
+  var { name, region, district,contacts, location, description } = req.body;
 
   description = description || "New branch at " + location
   var _id = getRandomInt(1000, 10000);
@@ -190,6 +199,11 @@ exports.createBranch = async(req, res) => {
     if (vname != true) {
       return res.status(200).json({ success: false, code: 409, message: vname })
     }
+
+     var vphone = await richFunctions.validatePhone(contacts,'Destination');
+        if (vphone != true) {
+          return res.status(200).json({ success: false, code: 409, message: vphone })
+        }
 
     var vdistrict = await richFunctions.validateNames(district, "District");
     if (vdistrict != true) {
@@ -212,13 +226,14 @@ exports.createBranch = async(req, res) => {
     }
 
 
-  var insert_qry = "INSERT INTO branches SET name = ?, region = ?,district = ?,location = ? , description = ?, company_id = ?, id = ?, created_by = ?;"
+  var insert_qry = "INSERT INTO branches SET name = ?, region = ?,district = ?,location = ? ,contacts = ?, description = ?, company_id = ?, id = ?, created_by = ?;"
+      insert_qry += "UPDATE company SET branches = "+(_branches - 1)+" WHERE id = "+company_id+";"
 
   pool.getConnection((err, connection) => {
     if (err) throw err; // not connected
     //console.log('Connected!');
 
-    connection.query(insert_qry, [name, region, district, location, description, company_id, _id, user_id], (err, rows) => {
+    connection.query(insert_qry, [name, region, district, location, contacts, description, company_id, _id, user_id], (err, rows) => {
       // Once done, release connection
       connection.release();
 
@@ -226,7 +241,7 @@ exports.createBranch = async(req, res) => {
         return res.status(200).json({ success: true, code: 200, message: "branch created Successfuly" })
       } else {
 
-        console.log(err);
+        //console.log(err);
         return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
       }
 
@@ -246,7 +261,7 @@ exports.allBranches = (req, res) => {
     var branch_id = user.branch_id;
     var company_id = user.company_id;
 
-    var quer = "SELECT br.id, rg.name AS region, rg.id AS region_id, rg.district AS region_district, us.fulname AS created_by, br.created_at, br.name, br.thumbnail, br.description, br.district, br.location, br.status " +
+    var quer = "SELECT br.id,br.contacts, rg.name AS region, rg.id AS region_id, rg.district AS region_district, us.fulname AS created_by, br.created_at, br.name, br.thumbnail, br.description, br.district, br.location, br.status " +
       "FROM branches AS br " +
       "INNER JOIN region AS rg ON br.region = rg.id " +
       "INNER JOIN users AS us ON br.created_by = us.id " +
@@ -256,12 +271,12 @@ exports.allBranches = (req, res) => {
       if (err) throw err;
       //query
       connection.query(quer, [company_id], (err, branches) => {
-        //connection.release();
+        connection.release();
         if (!err) {
-          console.log(err)
+          //console.log(err)
           return res.status(200).json({ success: true, code: 200, branches, message: "Successfuly fetch all branches" })
         } else {
-          console.log(err)
+          //console.log(err)
           return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
         }
 
@@ -270,7 +285,7 @@ exports.allBranches = (req, res) => {
     })
 
   } catch (error) {
-    console.log(err)
+    //console.log(err)
     return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
   }
 
@@ -280,10 +295,12 @@ exports.usersAndStatistics = (req, res) => {
 
   try {
 
+    var branch_id = req.body.branch_id;
+    //console.log(branch_id);
     var user = req.user.user_data
 
     var user_id = user.id;
-    var branch_id = user.branch_id;
+    //var branch_id = user.branch_id;
     var company_id = user.company_id;
 ////todays
 var today = new Date();
@@ -321,16 +338,18 @@ var date_end = yy + '-' + mm + '-' + dd + ' 23:59:59'
 
     var queries = "SELECT COUNT(*) AS received FROM packages WHERE company_id = "+company_id+" AND status = "+2+" AND branch_to = "+branch_id+";"
         queries += "SELECT COUNT(*) AS sent FROM packages WHERE company_id = "+company_id+" AND status = "+2+" AND branch_from = "+branch_id+";"
-        queries += "SELECT SUM(price) AS rev30 FROM packages WHERE company_id = "+company_id+" AND status <= "+2+" AND created_at >= '"+date_start30+"' AND created_at <= '"+date_end+"';"
-        queries += "SELECT SUM(price) AS life_time FROM packages WHERE company_id = "+company_id+" AND status <= "+2+";"
+        queries += "SELECT SUM(price) AS rev30 FROM packages WHERE company_id = "+company_id+" AND branch_from = "+branch_id+" AND status <= "+2+" AND created_at >= '"+date_start30+"' AND created_at <= '"+date_end+"';"
+        queries += "SELECT SUM(price) AS life_time FROM packages WHERE company_id = "+company_id+" AND branch_from = "+branch_id+" AND status <= "+2+";"
         queries += "SELECT cu.fulname AS created_by, us.fulname, us.username,us.created_at, us.id, us.role, us.branch_id, us.avator, us.status FROM users AS us INNER JOIN users AS cu ON us.created_by = cu.id WHERE us.company_id = "+company_id+" AND us.branch_id = "+branch_id+";"
 
     pool.getConnection((err, connection) => {
       if (err) throw err;
       //query
       connection.query(queries, [company_id], (err, data) => {
-        //connection.release();
+        connection.release();
         if (!err) {
+          //console.log(data)
+
           var staffs = data[4]
           var statistics = {
             rev_30 : data[2][0]['rev30'] || 0,
@@ -340,7 +359,7 @@ var date_end = yy + '-' + mm + '-' + dd + ' 23:59:59'
           }
           return res.status(200).json({ success: true, code: 200, staffs, statistics, message: "Successfuly fetch all data" })
         } else {
-          console.log(err)
+          //console.log(err)
           return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
         }
 
@@ -349,7 +368,7 @@ var date_end = yy + '-' + mm + '-' + dd + ' 23:59:59'
     })
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
     return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
   }
 
@@ -365,7 +384,7 @@ exports.otherBranches = (req, res) => {
     var branch_id = user.branch_id;
     var company_id = user.company_id;
 
-    var quer = "SELECT br.id, rg.name AS region, rg.id AS region_id, rg.district AS region_district, us.fulname AS created_by, br.created_at, br.name, br.thumbnail, br.description, br.district, br.location, br.status " +
+    var quer = "SELECT br.id, br.contacts, rg.name AS region, rg.id AS region_id, rg.district AS region_district, us.fulname AS created_by, br.created_at, br.name, br.thumbnail, br.description, br.district, br.location, br.status " +
       "FROM branches AS br " +
       "INNER JOIN region AS rg ON br.region = rg.id " +
       "INNER JOIN users AS us ON br.created_by = us.id " +
@@ -375,12 +394,12 @@ exports.otherBranches = (req, res) => {
       if (err) throw err;
       //query
       connection.query(quer, [company_id, branch_id], (err, branches) => {
-        //connection.release();
+        connection.release();
         if (!err) {
           
           return res.status(200).json({ success: true, code: 200, branches, message: "Successfuly fetch other branches" })
         } else {
-          console.log(err)
+          //console.log(err)
           return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
         }
 
@@ -389,7 +408,7 @@ exports.otherBranches = (req, res) => {
     })
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
     return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
   }
 
@@ -411,12 +430,12 @@ exports.allRegion = (req, res) => {
       if (err) throw err;
       //query
       connection.query(quer, (err, regions) => {
-        //connection.release();
+        connection.release();
         if (!err) {
-          console.log(err)
+          //console.log(err)
           return res.status(200).json({ success: true, code: 200, regions, message: "Successfuly fetch all region" })
         } else {
-          console.log(err)
+          //console.log(err)
           return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
         }
 
@@ -425,7 +444,7 @@ exports.allRegion = (req, res) => {
     })
 
   } catch (error) {
-    console.log(err)
+    //console.log(err)
     return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
   }
 

@@ -1,17 +1,9 @@
 const pool = require('../config/dbconfig')
-var data = require('../data')
-const fs = require('fs');
+//var data = require('../data')
+//const fs = require('fs');
 
 var richFunctions = require('../richardFunctions')
 
-const axios = require('axios');
-const { query } = require('express');
-
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
 
 exports.deleteTag = async (req, res) => {
 
@@ -38,10 +30,11 @@ exports.deleteTag = async (req, res) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
       connection.query(quer, [id, id], (err, packages) => {
-        connection.release();
+        //connection.release();
         if (!err) {
           if (packages[0].length != 0) {
             //console.log(tags)
+             connection.release();
             return res.status(200).json({ success: false, code: 409, message: "Can't delete tag which hold packages" })
           } else {
             if (packages[1].length == 0) {
@@ -58,7 +51,7 @@ exports.deleteTag = async (req, res) => {
                   if (!err) {
                     return res.status(200).json({ success: true, code: 200, message: "Tag deleted successfuly" })
                   } else {
-                    console.log(err)
+                    //console.log(err)
                     return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
                   }
                   //console.log('the data: \n',rows);
@@ -70,7 +63,7 @@ exports.deleteTag = async (req, res) => {
 
           }
         } else {
-          console.log(err)
+         // console.log(err)
           return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
         }
 
@@ -78,7 +71,7 @@ exports.deleteTag = async (req, res) => {
     })
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
     return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
   }
 
@@ -88,7 +81,7 @@ exports.updateTag = async (req, res) => {
 
   var { name, description, status, id } = req.body
 
-  console.log(req.body)
+  //console.log(req.body)
 
   name = name.toLowerCase()
   description = description || name
@@ -131,7 +124,7 @@ exports.updateTag = async (req, res) => {
         if (!err) {
           return res.status(200).json({ success: true, code: 200, message: "Tag updated successfuly" })
         } else {
-          console.log(err)
+          //console.log(err)
           return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
         }
 
@@ -139,7 +132,7 @@ exports.updateTag = async (req, res) => {
       })
     })
   } catch (error) {
-    console.log(error)
+    //console.log(error)
     return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
   }
 
@@ -176,10 +169,11 @@ exports.createTag = async (req, res) => {
     pool.getConnection((err, connection) => {
       if (err) throw err;
       connection.query(check_qry, [name, company_id, 1], (err, tags) => {
-        connection.release();
+        
         if (!err) {
           if (tags.length != 0) {
             //console.log(tags)
+            connection.release();
             return res.status(200).json({ success: false, code: 409, message: "Tag name aleady exist" })
           } else {
             //query
@@ -188,7 +182,7 @@ exports.createTag = async (req, res) => {
               if (!err) {
                 return res.status(200).json({ success: true, code: 200, message: "Tag created successfuly" })
               } else {
-                console.log(err)
+                //console.log(err)
                 return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
               }
 
@@ -196,7 +190,7 @@ exports.createTag = async (req, res) => {
             })
           }
         } else {
-          console.log(err)
+          //console.log(err)
           return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
         }
 
@@ -204,7 +198,7 @@ exports.createTag = async (req, res) => {
     })
 
   } catch (error) {
-    console.log(error)
+    //console.log(error)
     return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
   }
 
@@ -231,10 +225,10 @@ exports.allTags = (req, res) => {
       connection.query(quer, [company_id, 1], (err, tags) => {
         //connection.release();
         if (!err) {
-          console.log(err)
+          //console.log(err)
           return res.status(200).json({ success: true, code: 200, tags, message: "Successfuly fetch all tags" })
         } else {
-          console.log(err)
+          //console.log(err)
           return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
         }
 
@@ -243,7 +237,7 @@ exports.allTags = (req, res) => {
     })
 
   } catch (error) {
-    console.log(err)
+    //console.log(err)
     return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
   }
 
@@ -270,10 +264,10 @@ exports.defaultTags = (req, res) => {
       connection.query(quer, [1], (err, tags) => {
         connection.release();
         if (!err) {
-          console.log(err)
+          //console.log(err)
           return res.status(200).json({ success: true, code: 200, tags, message: "Successfuly fetch default tags" })
         } else {
-          console.log(err)
+          //console.log(err)
           return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
         }
 
@@ -282,7 +276,7 @@ exports.defaultTags = (req, res) => {
     })
 
   } catch (error) {
-    console.log(err)
+    //console.log(err)
     return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
   }
 
@@ -309,10 +303,10 @@ exports.customTags = (req, res) => {
       connection.query(quer, [company_id], (err, tags) => {
         connection.release();
         if (!err) {
-          console.log(err)
+          //console.log(err)
           return res.status(200).json({ success: true, code: 200, tags, message: "Successfuly fetch default tags" })
         } else {
-          console.log(err)
+          //console.log(err)
           return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
         }
 
@@ -321,7 +315,7 @@ exports.customTags = (req, res) => {
     })
 
   } catch (error) {
-    console.log(err)
+    //console.log(err)
     return res.status(200).json({ success: false, code: 500, message: "Database or Server Error" })
   }
 

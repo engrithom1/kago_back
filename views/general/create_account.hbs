@@ -1,0 +1,365 @@
+
+
+<style>
+    .breadcumb-area,
+    .breadcumb-blog-area {
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+        background-position: center center;
+        background-image: url('/images/ss_slider-kagopoint1.jpg');
+        background-size: cover;
+    }
+
+     .loading-hiden {
+        display: none;
+    }
+
+    .loading-show {
+        display: contents;
+    }
+</style>
+
+<!-- BLOG BREADCUMB START -->
+<div class="breadcumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 txtc  text-center ccase">
+                <div class="brpt">
+                    <h2>Create Account</h2>
+                </div>
+                <!--div class="breadcumb-inner">
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><i class="fa fa-angle-right"></i></li>
+                        <li>contact</li>
+                    </ul>
+                </div-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="template-home-wrapper">
+
+    <div class="page-content-home-page">
+        <div data-elementor-type="wp-page" data-elementor-id="1296" class="elementor elementor-1296">
+            <section
+                class="elementor-section elementor-top-section elementor-element elementor-element-6668504 elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+                data-id="6668504" data-element_type="section">
+                <div class="container p-5">
+                    <!--form start-->
+                    <div class="row">
+                        <div class="col-md-3">
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <h2>Fill All Required Information</h2>
+                            </div>
+                            <hr />
+                            <h3 class="mb-2 mt-3">Personal Information</h3>
+                            <div class="form-group">
+                                <label for="">Sponsor Fulname *</label>
+                                <input id="fulname" class="form-control" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Sponsor Phone 1*</label>
+                                <input id="phone1" class="form-control" type="text">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Phone 2 (option)</label>
+                                <input id="phone2" class="form-control" type="text">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Position *</label>
+                                <select name="position" id="position">
+                                    <option value="">Select Your Possition</option>
+                                    <option value="Manager">Manager</option>
+                                    <option value="CEO">CEO</option>
+                                    <option value="Business Owner">Business Owner</option>
+                                    <option value="Board Member">Board Member</option>
+                                    <option value="Chair Man">Chair Man</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <hr />
+                            <h3 class="mb-2 mt-3">Company Information</h3>
+                            <div class="form-group">
+                                <label for="">Company Fulname *</label>
+                                <input id="company_name" class="form-control" type="text">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Company Short name(Abbreviation) *</label>
+                                <input id="company_label" class="form-control" type="text">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Office Contacts*</label>
+                                <input id="contacts" class="form-control" type="text">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Region *</label>
+                                <select id="fulregion" class="form-select form-control">
+                                    <option value="">Select Company Region</option>
+                                    {{#each regions}}
+                                    <option value="{{this.id}},{{this.district}}">{{this.name}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="">Location *</label>
+                                <input id="location" class="form-control" type="text">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description">Company Description (short)*</label>
+                                <textarea id="description" class="form-control" name="description" cols="3" rows="5"></textarea>
+                            </div>
+<center>
+                                         <div id="loading" class="loading-hiden">
+                                            <img class="center-block" width="350" src="/images/cupertino.gif" alt="#" />
+                                        </div>
+                                       </center>
+                            <p class="text-danger" id="error"></p>
+
+                            <div class="">
+                                <div class="form-group">
+                                    <div class="buttons">
+                                        <button id="submit_button" class="wpcf7-form-control has-spinner button"
+                                                type="button">Submit now</button>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <h4 class="mt-3">If You Have an Account <a href="https://www.web.kagopoint.com/" class="h4 text-primary">Login In</a></h4>
+
+
+
+                        </div>
+                        <div class="col-md-3">
+
+                        </div>
+                    </div>
+                    <!--form end-->
+                </div>
+            </section>
+            <section
+                class="elementor-section elementor-top-section elementor-element elementor-element-6668504 elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+                data-id="6668504" data-element_type="section">
+                <div class="elementor-container elementor-column-gap-default">
+                    <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-f6e18ba"
+                        data-id="f6e18ba" data-element_type="column">
+                        <div class="elementor-widget-wrap elementor-element-populated">
+                            <div class="elementor-element elementor-element-c5c0a60 elementor-widget elementor-widget-iconbox"
+                                data-id="c5c0a60" data-element_type="widget" data-widget_type="iconbox.default">
+                                <div class="elementor-widget-container">
+
+
+
+
+                                    <div class="icon-box style-four">
+
+                                        <div class="icon-box-icon">
+
+                                            <div class="icon">
+                                                <i class="fa fa-map"></i>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="icon-box-content">
+                                            <div class="title">
+                                                <h2>Our Address</h2>
+                                            </div>
+                                            <div class="description">
+                                                <p>Mwananyamala, DSM.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-04a4fdd"
+                        data-id="04a4fdd" data-element_type="column">
+                        <div class="elementor-widget-wrap elementor-element-populated">
+                            <div class="elementor-element elementor-element-788dcee elementor-widget elementor-widget-iconbox"
+                                data-id="788dcee" data-element_type="widget" data-widget_type="iconbox.default">
+                                <div class="elementor-widget-container">
+
+
+
+
+                                    <div class="icon-box style-four">
+
+                                        <div class="icon-box-icon">
+
+                                            <div class="icon">
+                                                <i class="fa fa-phone"></i>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="icon-box-content">
+                                            <div class="title">
+                                                <h2> Phone Number</h2>
+                                            </div>
+                                            <div class="description">
+                                                <p>0686 255811</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="elementor-column elementor-col-33 elementor-top-column elementor-element elementor-element-68c8dc6"
+                        data-id="68c8dc6" data-element_type="column">
+                        <div class="elementor-widget-wrap elementor-element-populated">
+                            <div class="elementor-element elementor-element-503da23 elementor-widget elementor-widget-iconbox"
+                                data-id="503da23" data-element_type="widget" data-widget_type="iconbox.default">
+                                <div class="elementor-widget-container">
+
+
+
+
+                                    <div class="icon-box style-four">
+
+                                        <div class="icon-box-icon">
+
+                                            <div class="icon">
+                                                <i class="fa fa-envelope-open"></i>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="icon-box-content">
+                                            <div class="title">
+                                                <h2>Email Us</h2>
+                                            </div>
+                                            <div class="description">
+                                                <p>info@kagopoint.com</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section
+                class="elementor-section elementor-top-section elementor-element elementor-element-2c88c5c elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+                data-id="2c88c5c" data-element_type="section">
+                <div class="elementor-container elementor-column-gap-default">
+                    <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-316ea38"
+                        data-id="316ea38" data-element_type="column">
+                        <div class="elementor-widget-wrap">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+     function selectValidation(text, label) {
+
+        if (text == '' || text == null) {
+            alert('Select '+label)
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+     $(document).on('click', '#submit_button', function (e) {
+        e.preventDefault()
+        try {
+
+            var fulname = $('#fulname').val();
+            var phone1 = $('#phone1').val();
+            var phone2 = $('#phone2').val();
+            var position = $('#position').val();
+            var company_name = $('#company_name').val();
+            var company_label = $('#company_label').val();
+            var contacts = $('#contacts').val();
+             var location = $('#location').val();
+              var fulregion = $('#fulregion').val();
+               var description = $('#description').val();
+
+               if(selectValidation(position,"Your Position") && selectValidation(fulregion,"Company Region")){
+           
+            var reg = fulregion.split(",")
+
+            var region = reg[0]
+            var district = reg[1]
+          
+               
+                    $('#loading').attr('class', 'loading-show')
+                    $('#submit_button').attr('disabled', true)
+                     $('#error').text("")
+                 
+                    //$('#package-form').submit();
+
+                    $.ajax({
+                        url: '/api/user/create-account',
+                        method: 'POST',
+                        data: {
+                            fulname, phone1, phone2, position, company_name, company_label, contacts, location, description, region, district
+                        }
+                    })
+                        .then((response) => {
+
+                            $('#loading').attr('class', 'loading-hiden')
+                            $('#submit_button').removeAttr('disabled')
+                            if (response.status == "good") {
+                               alert(response.msg)
+                               window.location.href = 'https://kagoapp.akilikubwadigital.com/'
+                            } else {
+                               
+                                $('#error').text(response.msg)
+                                
+                            }
+
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                            alert('Check internet, try again')
+                        });
+
+        }
+
+        } catch (error) {
+            console.log(error)
+            alert('something is wrong')
+        }
+
+    })
+
+
+</script>

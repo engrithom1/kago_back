@@ -1,0 +1,253 @@
+<style>
+    .breadcumb-area,
+        .breadcumb-blog-area {
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+            background-position: center center;
+            background-image: url('/images/ss_slider-kagopoint1.jpg');
+            background-size: cover;
+        }
+
+    .loading-hiden {
+        display: none;
+    }
+
+    .loading-show {
+        display: contents;
+    }
+</style>
+
+<!-- BLOG BREADCUMB START -->
+<div class="breadcumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 txtc  text-center ccase">
+                <div class="brpt">
+                    <h2> Data Safety</h2>
+                </div>
+                <div class="breadcumb-inner">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><i class="fa fa-angle-right"></i></li>
+                        <li>Data safety</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section id="about" class="about section mb-5">
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-5">
+            <div class="col-md-2 col-sm-12"></div>
+            <div class="col-md-8 col-sm-12 section-header">
+                <!--img src="/img/youth_winner.png" alt="Team meeting" class="img-fluid main-visual"-->
+                <br />
+                <h3 class="mt-3">
+                    Request For Deleting Data or Account
+                </h3>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-2"></div>
+                    <div class="col-sm-12 col-md-8">
+                        <h5 class="mt-3">Fill All Required Information</h5>
+                        <form class="php-email-form" data-aos="fade-up"
+                            data-aos-delay="600">
+                            <div class="row gy-4">
+                               
+                                <div class="col-12">
+                                    <label for="">Phone no( username)</label>
+                                    <input type="text" id="phone1" name="name" class="form-control" placeholder=""
+                                        required="">
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="">Password</label>
+                                    <input type="text" id="password" name="name" class="form-control" placeholder=""
+                                        required="">
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="">Delete Type</label>
+                                    <select id="region_id" class="form-select form-control">
+                                        <option value="0">Select Action</option>
+                                        <option value="1">Delete Other Data</option>
+                                        <option value="2">Delete Account</option>
+                                        
+                                    </select>
+                                </div>
+
+                                <div class="col-12 text-center">
+                                    <div id="loading" class="loading-hiden">
+                                        <img class="center-block" width="350" src="/images/cupertino.gif" alt="#" />
+                                    </div>
+                                    <p class="text-danger" id="error_message"></p>
+
+                                    <button id="submit_button" class="btn btn-submit btn-gradient btn-md btn-animated-none">Submit Form</button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-12 col-md-2"></div>
+
+                </div>
+
+            </div>
+            <div class="col-md-2 col-sm-12"></div>
+        </div>
+
+
+    </div>
+
+</section><!-- /About Section -->
+
+
+<script>
+
+    function isNumeric(num) {
+        return /^-?\d+$/.test(num)
+    }
+
+    function validatePhone(phone) {
+        if (phone.length == "10") {
+            var first = phone.slice(0, 1)
+            var last = phone.slice(-9)
+
+            if (first == '0' || first == 0) {
+                //alert(first+" - "+last);
+                if (isNumeric(last)) {
+                    return true;
+                } else {
+                    //alert('Phonenumber must be Integer value')
+                    document.getElementById('error_message').innerText = 'Phonenumber must be Integer value'
+                    return false;
+                }
+            } else {
+                //alert('Phonenumber must begin with 0')
+                document.getElementById('error_message').innerText = 'Phonenumber must begin with 0'
+                return false;
+            }
+
+        } else {
+            //alert('Enter correct Phone number')
+            document.getElementById('error_message').innerText = 'Enter correct Phone number'
+            return false;
+
+        }
+    }
+
+
+    function validateUsername(username) {
+
+        if (username == '' || username == null || username == undefined) {
+
+            document.getElementById('error_message').innerText = 'Fulname is required'
+            return false
+        } else {
+            if (username.length <= "2" || username.length > 35) {
+                //alert('Username is not correct')
+                document.getElementById('error_message').innerText = 'Fulname is not correct'
+                return false
+            } else {
+                return true
+            }
+
+        }
+
+    }
+
+    function validateLocation(location) {
+        if (location == '' || location == null || location == undefined) {
+
+            document.getElementById('error_message').innerText = 'Location is required'
+            return false
+        } else {
+            if (location.length <= "2" || location.length > 35) {
+                //alert('location is not correct')
+                document.getElementById('error_message').innerText = 'Location is not correct'
+                return false
+            } else {
+                return true
+            }
+        }
+
+    }
+
+    function selectValidation(text) {
+
+        if (text == 0 || text == '0') {
+            document.getElementById('error_message').innerText = 'Select Delete Type'
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    function validatePassword(password) {
+
+        if (password == '' || password == null || password == undefined) {
+
+            document.getElementById('error_message').innerText = 'Password is required'
+            return false
+        } else {
+
+            if (password.length < "8" || password.length > 32) {
+                //alert('location is not correct')
+                document.getElementById('error_message').innerText = 'Password lenght is 8 characters'
+                return false
+            } else {
+
+                return true
+            }
+        }
+    }
+
+
+
+    $(document).on('click', '#submit_button', function (e) {
+        e.preventDefault()
+        try {
+
+          
+            var phone = $('#phone1').val();
+            var region_id = $('#region_id').val();
+          
+            var password = $('#password').val();
+          
+
+            if (validatePhone(phone) && selectValidation(region_id) && validatePassword(password)) {
+
+                $('#loading').attr('class', 'loading-show')
+                $('#submit_button').attr('disabled', true)
+                $('#error_message').text("")
+
+setTimeout(function() {
+ $('#loading').attr('class', 'loading-hiden')
+                        $('#submit_button').removeAttr('disabled')
+                            alert("You will get Text SMS soon")
+                            window.location.href = '/'
+}, 7000);
+
+                        
+                           
+                       
+
+                   
+            }
+
+        } catch (error) {
+            console.log(error)
+            alert('something is wrong')
+        }
+
+    })
+
+
+
+</script>
+

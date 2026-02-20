@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
-        <div class="col-sm-12 col-md-3"></div>
-        <div class="col-sm-12 col-md-6 border-left border-right">
+        <div class="col-sm-12 col-md-2"></div>
+        <div class="col-sm-12 col-md-8 border-left border-right">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="#">
                     <h2>Kagopoint API Doc</h2>
@@ -142,8 +142,111 @@
                         </div>
                     </div>
                 </div>
+
+                 <div class="card">
+                    <div class="card-header" id="receive-h">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                data-target="#receive" aria-expanded="false" aria-controls="receive">
+                                5.1 receive parcel
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="receive" class="collapse" aria-labelledby="receive-h"
+                        data-parent="#accordionExample">
+                        <div class="card-body">
+                           {{>parcel_received}}
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="card">
+                    <div class="card-header" id="remove-h">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                data-target="#remove" aria-expanded="false" aria-controls="remove">
+                                5.2 remove parcel
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="remove" class="collapse" aria-labelledby="remove-h"
+                        data-parent="#accordionExample">
+                        <div class="card-body">
+                           {{>parcel_remove}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header" id="editp-h">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                data-target="#editp" aria-expanded="false" aria-controls="editp">
+                                5.3 edit parcel
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="editp" class="collapse" aria-labelledby="editp-h"
+                        data-parent="#accordionExample">
+                        <div class="card-body">
+                           {{>parcel_edit}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header" id="print-h">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                data-target="#print" aria-expanded="false" aria-controls="print">
+                                5.4 print receipt parcel
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="print" class="collapse" aria-labelledby="print-h"
+                        data-parent="#accordionExample">
+                        <div class="card-body">
+                           {{>parcel_print}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header" id="password-h">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                data-target="#password" aria-expanded="false" aria-controls="password">
+                                6 change password
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="password" class="collapse" aria-labelledby="password-h"
+                        data-parent="#accordionExample">
+                        <div class="card-body">
+                           {{>change_password}}
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="card">
+                    <div class="card-header" id="dashbord-h">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                data-target="#dashbord" aria-expanded="false" aria-controls="dashbord">
+                                7 Dashbord data
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="dashbord" class="collapse" aria-labelledby="dashbord-h"
+                        data-parent="#accordionExample">
+                        <div class="card-body">
+                           {{>dashbord_data}}
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-        <div class="col-sm-12 col-md-3"></div>
+        <div class="col-sm-12 col-md-2"></div>
     </div>
 </div>
